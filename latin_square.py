@@ -2,8 +2,6 @@ from random import randrange
 
 n = int(input('Enter n: '))
 
-def calculate_valid_values(valid_values):
-    pass
 
 def init_valid_values():
     values = [*range(1, n + 1)]
@@ -34,7 +32,54 @@ def is_valid(valid_values):
                 return False
     return True
 
+def calculate_valid_values(valid_values, number, row_index, col_index):
+    i = row_index
+    for j in range(n):
+        valid_values[i][j].remove(number)
 
+    i = col_index
+    for j in range(n):
+        valid_values[j][i].remove(number)
+
+    valid_values[row_index][col_index] = number
+
+    return valid_values 
+
+def calculate_mrv(valid_values):
+
+    mrv = []
+
+    for i in range(n):
+        row = []
+        for j in range(n):
+            row.append(len(valid_values[i][j]))
+        mrv.append(row)
+
+    return mrv
+
+def find_index_mrv(mrv_values):
+    mrv = n
+    row = 0
+    col = 0
+
+    for i in range(n):
+        for j in  range(n):
+            if mrv_values[i][j] < mrv:
+                row = i
+                col = j
+                mrv = mrv_values[i][j]
+    
+    return row, col
+
+row_stack = []
+col_stack = []
+valid_values_stack = []
+latin_square_stack = []
+
+latin_square = init_latin_square()
+valid_values = init_valid_values()
+
+mrv_values = calculate_mrv(valid_values)
 
 
 
